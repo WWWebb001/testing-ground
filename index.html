@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TRCF Image Resizer WWWEBB PRO</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;600&display=swap"
+        rel="stylesheet"/>
+</head>
+<body>
+<header>
+  <h1><i class="fas fa-image"></i> TRCF Image Resizer WWWEBB PRO</h1>
+  <p>Resize logos, speaker photos & speaker cards ready for upload</p>
+</header>
+
+<main>
+  <div class="tabs">
+    <div id="logo-tab" class="tab active">Resize Logos</div>
+    <div id="speaker-tab" class="tab">Resize Speaker Photos</div>
+    <div id="overlay-tab" class="tab">Speaker Card Overlay</div> <!-- ✅ New Tab -->
+  </div>
+
+  <!-- LOGO TAB -->
+  <div id="logo-area" class="container active-area">
+    <div id="drop-area-logo" class="drop-area">
+      <p><i class="fas fa-cloud-upload-alt fa-2x"></i></p>
+      <p><strong>Drag & Drop Logos Here</strong></p>
+      <p>or <label for="upload-logo" class="browse-button">browse files</label></p>
+      <input type="file" id="upload-logo" accept="image/*" multiple />
+    </div>
+    <div id="gallery-logo"></div>
+    <div class="buttons">
+      <button id="downloadLink-logo">Download Logos</button>
+      <button id="restart-logo">Restart</button>
+      <div id="spinner-logo" class="spinner hidden">Processing...</div>
+    </div>
+  </div>
+
+  <!-- SPEAKER TAB -->
+  <div id="speaker-area" class="container hidden-area">
+    <div id="drop-area-speaker" class="drop-area">
+      <p><i class="fas fa-cloud-upload-alt fa-2x"></i></p>
+      <p><strong>Drag & Drop Speaker Photos Here</strong></p>
+      <p>or <label for="upload-speaker" class="browse-button">browse files</label></p>
+      <input type="file" id="upload-speaker" accept="image/*" multiple />
+    </div>
+    <div id="gallery-speaker"></div>
+    <div class="buttons">
+      <button id="downloadLink-speaker">Download Speakers</button>
+      <button id="restart-speaker">Restart</button>
+      <div id="spinner-speaker" class="spinner hidden">Processing...</div>
+    </div>
+  </div>
+
+  <!-- OVERLAY TAB -->
+  <div id="overlay-area" class="container hidden-area">
+    <div id="drop-area-overlay" class="drop-area">
+      <p><i class="fas fa-cloud-upload-alt fa-2x"></i></p>
+      <p><strong>Drag & Drop Portraits Here</strong></p>
+      <p>or <label for="upload-overlay" class="browse-button">browse files</label></p>
+      <input type="file" id="upload-overlay" accept="image/*" multiple />
+    </div>
+    <div id="gallery-overlay"></div>
+    <div class="buttons">
+      <button id="downloadLink-overlay">Download Speaker Cards</button>
+      <button id="restart-overlay">Restart</button>
+      <div id="spinner-overlay" class="spinner hidden">Processing...</div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2025 TRCF Image Resizer. All rights reserved.</p>
+</footer>
+
+<!-- Canvases -->
+<canvas id="canvas" width="1000" height="1726" style="display:none;"></canvas>
+<canvas id="speaker-canvas" width="591" height="591" style="display:none;"></canvas>
+
+<!-- Modal (Optional Editing – future implementation) -->
+<div id="edit-modal" class="hidden">
+  <div class="edit-content">
+    <canvas id="edit-canvas" width="591" height="591" style="border:2px solid black;"></canvas>
+    <div class="edit-buttons">
+      <button id="zoom-in"><i class="fas fa-search-plus"></i></button>
+      <button id="zoom-out"><i class="fas fa-search-minus"></i></button>
+      <button id="cancel-editing"><i class="fas fa-times"></i></button>
+      <button id="done-editing">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="hidden">Images processed successfully!</div>
+
+<!-- Dependencies -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
