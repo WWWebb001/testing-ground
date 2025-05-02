@@ -318,3 +318,17 @@ footer {
 .edit-buttons button i {
     font-size: 24px;
 }
+
+
+/* Speaker Card Gallery */
+#gallery-speaker-card {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+}
+
+#gallery-speaker-card .thumb {
+    width: 300px;
+    height: 382px; /* Taller than square, to reflect 1000x1276 aspect ratio */
+}
