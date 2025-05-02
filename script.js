@@ -438,3 +438,124 @@ function processSpeaker(img, { offsetX, offsetY, scale }) {
     ctx.drawImage(img, offsetX, offsetY, img.width * scale, img.height * scale);
     return canvas.toDataURL('image/png');
 }
+
+
+// ===================
+// SPEAKER CARD HANDLING
+// ===================
+const speakerCardTab = document.getElementById('speaker-card-tab');
+const speakerCardArea = document.getElementById('speaker-card-area');
+const dropAreaSpeakerCard = document.getElementById('drop-area-speaker-card');
+const uploadSpeakerCard = document.getElementById('upload-speaker-card');
+const gallerySpeakerCard = document.getElementById('gallery-speaker-card');
+const downloadButtonSpeakerCard = document.getElementById('downloadLink-speaker-card');
+const restartButtonSpeakerCard = document.getElementById('restart-speaker-card');
+const spinnerSpeakerCard = document.getElementById('spinner-speaker-card');
+
+let speakerCardFiles = [];
+const speakerCardCanvas = document.getElementById('speaker-card-canvas');
+const speakerCardCtx = speakerCardCanvas.getContext('2d');
+let speakerCardOverlay = new Image();
+speakerCardOverlay.src = 'Top layer.png';
+
+// Tab switch logic
+speakerCardTab.addEventListener('click', () => {
+    logoTab.classList.remove('active');
+    speakerTab.classList.remove('active');
+    speakerCardTab.classList.add('active');
+
+    logoArea.style.display = 'none';
+    speakerArea.style.display = 'none';
+    speakerCardArea.style.display = 'block';
+});
+
+dropAreaSpeakerCard.addEventListener('click', () => uploadSpeakerCard.click());
+dropAreaSpeakerCard.addEventListener('dragover', e => e.preventDefault());
+dropAreaSpeakerCard.addEventListener('drop', e => {
+    e.preventDefault();
+    handleSpeakerCardFiles(e.dataTransfer.files);
+});
+uploadSpeakerCard.addEventListener('change', e => handleSpeakerCardFiles(e.target.files));
+
+function handleSpeakerCardFiles(files) {
+    for (let file of files) {
+        if (file.type.startsWith('image/')) {
+            speakerCardFiles.push(file);
+            displaySpeakerCardThumbnail(file);
+        }
+    }
+}
+
+function displaySpeakerCardThumbnail(file) {
+    const reader = new FileReader();
+    reader.onload = e => {
+        const thumb = document.createElement('div');
+        thumb.className = 'thumb';
+        thumb.innerHTML = \`
+            <img src="\${e.target.result}">
+            <input type="checkbox" checked>
+        \`;
+        gallerySpeakerCard.appendChild(thumb);
+    };
+    reader.readAsDataURL(file);
+}
+
+function processSpeakerCard(img) {
+    speakerCardCanvas.width = 1000;
+    speakerCardCanvas.height = 1276;
+
+    speakerCardCtx.fillStyle = 'white';
+    speakerCardCtx.fillRect(0, 0, speakerCardCanvas.width, speakerCardCanvas.height);
+
+    // Fit the image to canvas with padding (optional adjustment)
+    const padding = 60;
+    const maxWidth = speakerCardCanvas.width - padding * 2;
+    const maxHeight = speakerCardCanvas.height - padding * 2;
+
+    let width = img.width;
+    let height = img.height;
+    const aspect = width / height;
+
+    if (width > maxWidth) {
+        width = maxWidth;
+        height = width / aspect;
+    }
+    if (height > maxHeight) {
+        height = maxHeight;
+        width = height * aspect;
+    }
+
+    const x = (speakerCardCanvas.width - width) / 2;
+    const y = (speakerCardCanvas.height - height) / 2;
+
+    speakerCardCtx.drawImage(img, x, y, width, height);
+    speakerCardCtx.drawImage(speakerCardOverlay, 0, 0, 1000, 1276);
+
+    return speakerCardCanvas.toDataURL('image/png');
+}
+
+downloadButtonSpeakerCard.addEventListener('click', async () => {
+    const selected = speakerCardFiles.map((_, i) => i).filter(i => gallerySpeakerCard.querySelectorAll('input')[i].checked);
+    if (selected.length === 0) return alert("Please select at least one image.");
+
+    spinnerSpeakerCard.classList.remove('hidden');
+    try {
+        const zip = new JSZip();
+        for (let idx of selected) {
+            const file = speakerCardFiles[idx];
+            const img = await loadImage(file);
+            const processed = processSpeakerCard(img);
+            zip.file(getFilename(file.name, '_1000x1276'), processed.split(',')[1], { base64: true });
+        }
+        const blob = await zip.generateAsync({ type: 'blob' });
+        triggerZipDownload(blob, 'processed-speaker-cards.zip');
+    } finally {
+        spinnerSpeakerCard.classList.add('hidden');
+        showToast();
+    }
+});
+
+restartButtonSpeakerCard.addEventListener('click', () => {
+    speakerCardFiles = [];
+    gallerySpeakerCard.innerHTML = '';
+});
