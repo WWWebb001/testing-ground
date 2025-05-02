@@ -1,3 +1,4 @@
+document.addEventListener('DOMContentLoaded', () => {
 // ===================
 // CONFIGURATION
 // ===================
@@ -562,4 +563,6 @@ downloadButtonSpeakerCard.addEventListener('click', async () => {
 restartButtonSpeakerCard.addEventListener('click', () => {
     speakerCardFiles = [];
     gallerySpeakerCard.innerHTML = '';
+});
+
 });
