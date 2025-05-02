@@ -76,15 +76,19 @@ let dragStartY = 0;
 logoTab.addEventListener('click', () => {
     logoTab.classList.add('active');
     speakerTab.classList.remove('active');
+    speakerCardTab.classList.remove('active');
     logoArea.style.display = 'block';
     speakerArea.style.display = 'none';
+    speakerCardArea.style.display = 'none';
 });
 
 speakerTab.addEventListener('click', () => {
     speakerTab.classList.add('active');
     logoTab.classList.remove('active');
+    speakerCardTab.classList.remove('active');
     speakerArea.style.display = 'block';
     logoArea.style.display = 'none';
+    speakerCardArea.style.display = 'none';
 });
 
 // ===================
