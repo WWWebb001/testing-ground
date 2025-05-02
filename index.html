@@ -21,6 +21,7 @@
         <div class="tabs">
             <div id="logo-tab" class="tab active">Resize Logos</div>
             <div id="speaker-tab" class="tab">Resize Speaker Photos</div>
+            <div id="speaker-card-tab" class="tab">Speaker Cards</div>
         </div>
 
         <div id="logo-area" class="container active-area">
@@ -55,6 +56,24 @@
                 <button id="restart-speaker">Restart</button>
                 <div id="spinner-speaker" class="spinner hidden">Processing...</div> <!-- ✅ Added speaker spinner -->
             </div>
+
+        <div id="speaker-card-area" class="container hidden-area">
+            <div id="drop-area-speaker-card" class="drop-area">
+                <p><i class="fas fa-cloud-upload-alt fa-2x"></i></p>
+                <p><strong>Drag & Drop Speaker Card Photos Here</strong></p>
+                <p>or <label for="upload-speaker-card" class="browse-button">browse files</label></p>
+                <input type="file" id="upload-speaker-card" accept="image/*" multiple>
+            </div>
+
+            <div id="gallery-speaker-card"></div>
+
+            <div class="buttons">
+                <button id="downloadLink-speaker-card">Download Cards</button>
+                <button id="restart-speaker-card">Restart</button>
+                <div id="spinner-speaker-card" class="spinner hidden">Processing...</div>
+            </div>
+        </div>
+
         </div>
     </main>
 
@@ -65,6 +84,7 @@
     <!-- Hidden canvases -->
     <canvas id="canvas" width="350" height="200" style="display:none;"></canvas>
     <canvas id="speaker-canvas" width="591" height="591" style="display:none;"></canvas>
+    <canvas id="speaker-card-canvas" width="1000" height="1276" style="display:none;"></canvas>
 
     <!-- Modal for editing speaker photos -->
     <div id="edit-modal" class="hidden">
