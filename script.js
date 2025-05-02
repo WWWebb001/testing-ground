@@ -1,4 +1,3 @@
-document.addEventListener('DOMContentLoaded', () => {
 // ===================
 // CONFIGURATION
 // ===================
@@ -24,6 +23,7 @@ const CONFIG = {
 // Tabs
 const logoTab = document.getElementById('logo-tab');
 const speakerTab = document.getElementById('speaker-tab');
+const speakerCardTab = document.getElementById('speaker-card-tab');
 const logoArea = document.getElementById('logo-area');
 const speakerArea = document.getElementById('speaker-area');
 
@@ -448,8 +448,6 @@ function processSpeaker(img, { offsetX, offsetY, scale }) {
 // ===================
 // SPEAKER CARD HANDLING
 // ===================
-const speakerCardTab = document.getElementById('speaker-card-tab');
-const speakerCardArea = document.getElementById('speaker-card-area');
 const dropAreaSpeakerCard = document.getElementById('drop-area-speaker-card');
 const uploadSpeakerCard = document.getElementById('upload-speaker-card');
 const gallerySpeakerCard = document.getElementById('gallery-speaker-card');
@@ -563,6 +561,4 @@ downloadButtonSpeakerCard.addEventListener('click', async () => {
 restartButtonSpeakerCard.addEventListener('click', () => {
     speakerCardFiles = [];
     gallerySpeakerCard.innerHTML = '';
-});
-
 });
